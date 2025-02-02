@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
 
     MiniJavaLexer lexer(in);
     Expr::Parser::value_type yylval;
-    Token token = static_cast<Token>(lexer.nextToken(&yylval));
+    // Token token = static_cast<Token>(lexer.nextToken(&yylval));
 
     Expr::Parser parser(lexer, vars);
     // if (parser.parse() != 0)

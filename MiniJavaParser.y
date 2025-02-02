@@ -2,6 +2,7 @@
 %language "c++"
 %parse-param {MiniJavaLexer& lexer}
 %parse-param {std::unordered_map<std::string, int>& vars}
+%define parse.trace
 
 %define parse.error verbose
 %define api.value.type variant
@@ -56,22 +57,19 @@ void yyerror(const char* msg) {
 %%
 
 input:
-      statement_list opt_semicolon
+      statement_list
     ;
 
-opt_semicolon:
-      SEMICOLON
-    | %empty
-    ;
-
-statement_list:
-      statement_list SEMICOLON statement
-    | statement
-    ;
 
 statement:
       expr { std::cout << "Resultado: " << $1 << '\n'; }
     ;
+
+statement_list:
+      statement_list SEMICOLON statement SEMICOLON
+    | statement 
+    ;
+
 
 expr:
       expr OP_ADD term { $$ = $1 + $3; }

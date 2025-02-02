@@ -37,7 +37,7 @@
 
 
 // First part of user prologue.
-#line 16 "MiniJavaParser.y"
+#line 17 "MiniJavaParser.y"
 
 #include <iostream>
 #include <stdexcept>
@@ -142,7 +142,7 @@ void yyerror(const char* msg) {
 #define YYERROR         goto yyerrorlab
 #define YYRECOVERING()  (!!yyerrstatus_)
 
-#line 9 "MiniJavaParser.y"
+#line 10 "MiniJavaParser.y"
 namespace Expr {
 #line 148 "/mnt/c/Users/josue/OneDrive/Documentos/VCode Proyectos/PracticasCompiladores2/build/MiniJavaParser.cpp"
 
@@ -694,38 +694,38 @@ namespace Expr {
         {
           switch (yyn)
             {
-  case 7: // statement: expr
-#line 73 "MiniJavaParser.y"
+  case 3: // statement: expr
+#line 65 "MiniJavaParser.y"
            { std::cout << "Resultado: " << yystack_[0].value.as < int > () << '\n'; }
 #line 701 "/mnt/c/Users/josue/OneDrive/Documentos/VCode Proyectos/PracticasCompiladores2/build/MiniJavaParser.cpp"
     break;
 
-  case 8: // expr: expr "+" term
-#line 77 "MiniJavaParser.y"
+  case 6: // expr: expr "+" term
+#line 75 "MiniJavaParser.y"
                        { yylhs.value.as < int > () = yystack_[2].value.as < int > () + yystack_[0].value.as < int > (); }
 #line 707 "/mnt/c/Users/josue/OneDrive/Documentos/VCode Proyectos/PracticasCompiladores2/build/MiniJavaParser.cpp"
     break;
 
-  case 9: // expr: expr "-" term
-#line 78 "MiniJavaParser.y"
+  case 7: // expr: expr "-" term
+#line 76 "MiniJavaParser.y"
                        { yylhs.value.as < int > () = yystack_[2].value.as < int > () - yystack_[0].value.as < int > (); }
 #line 713 "/mnt/c/Users/josue/OneDrive/Documentos/VCode Proyectos/PracticasCompiladores2/build/MiniJavaParser.cpp"
     break;
 
-  case 10: // expr: term
-#line 79 "MiniJavaParser.y"
+  case 8: // expr: term
+#line 77 "MiniJavaParser.y"
                       { yylhs.value.as < int > () = yystack_[0].value.as < int > (); }
 #line 719 "/mnt/c/Users/josue/OneDrive/Documentos/VCode Proyectos/PracticasCompiladores2/build/MiniJavaParser.cpp"
     break;
 
-  case 11: // term: term "*" factor
-#line 83 "MiniJavaParser.y"
+  case 9: // term: term "*" factor
+#line 81 "MiniJavaParser.y"
                          { yylhs.value.as < int > () = yystack_[2].value.as < int > () * yystack_[0].value.as < int > (); }
 #line 725 "/mnt/c/Users/josue/OneDrive/Documentos/VCode Proyectos/PracticasCompiladores2/build/MiniJavaParser.cpp"
     break;
 
-  case 12: // term: term "/" factor
-#line 84 "MiniJavaParser.y"
+  case 10: // term: term "/" factor
+#line 82 "MiniJavaParser.y"
                          {
           if (yystack_[0].value.as < int > () == 0) {
               yyerror("Division by zero");
@@ -737,26 +737,26 @@ namespace Expr {
 #line 738 "/mnt/c/Users/josue/OneDrive/Documentos/VCode Proyectos/PracticasCompiladores2/build/MiniJavaParser.cpp"
     break;
 
-  case 13: // term: factor
-#line 92 "MiniJavaParser.y"
+  case 11: // term: factor
+#line 90 "MiniJavaParser.y"
              { yylhs.value.as < int > () = yystack_[0].value.as < int > (); }
 #line 744 "/mnt/c/Users/josue/OneDrive/Documentos/VCode Proyectos/PracticasCompiladores2/build/MiniJavaParser.cpp"
     break;
 
-  case 14: // factor: "number"
-#line 96 "MiniJavaParser.y"
+  case 12: // factor: "number"
+#line 94 "MiniJavaParser.y"
                 { yylhs.value.as < int > () = yystack_[0].value.as < int > (); }
 #line 750 "/mnt/c/Users/josue/OneDrive/Documentos/VCode Proyectos/PracticasCompiladores2/build/MiniJavaParser.cpp"
     break;
 
-  case 15: // factor: OPEN_PAR expr CLOSE_PAR
-#line 97 "MiniJavaParser.y"
+  case 13: // factor: OPEN_PAR expr CLOSE_PAR
+#line 95 "MiniJavaParser.y"
                               { yylhs.value.as < int > () = yystack_[1].value.as < int > (); }
 #line 756 "/mnt/c/Users/josue/OneDrive/Documentos/VCode Proyectos/PracticasCompiladores2/build/MiniJavaParser.cpp"
     break;
 
-  case 16: // factor: "identifier"
-#line 98 "MiniJavaParser.y"
+  case 14: // factor: "identifier"
+#line 96 "MiniJavaParser.y"
                  {
           auto it = vars.find(yystack_[0].value.as < std::string > ());
           if(it == vars.end()){
@@ -1125,65 +1125,65 @@ namespace Expr {
   const signed char
   Parser::yypact_[] =
   {
-      -4,    -4,    -6,    -6,     2,    -5,    -6,     5,     6,    -6,
-      -3,    -6,    -4,    -6,    -4,    -4,    -4,    -4,    -6,    -6,
-       6,     6,    -6,    -6
+      -4,    -4,    -6,    -6,     2,    -6,    -5,     5,     6,    -6,
+      -3,    -6,    -4,    -4,    -4,    -4,    -4,    -6,     9,     6,
+       6,    -6,    -6,    -6
   };
 
   const signed char
   Parser::yydefact_[] =
   {
-       0,     0,    14,    16,     0,     4,     6,     7,    10,    13,
-       0,     1,     3,     2,     0,     0,     0,     0,    15,     5,
-       8,     9,    11,    12
+       0,     0,    12,    14,     0,     5,     2,     3,     8,    11,
+       0,     1,     0,     0,     0,     0,     0,    13,     0,     6,
+       7,     9,    10,     4
   };
 
   const signed char
   Parser::yypgoto_[] =
   {
-      -6,    -6,    -6,    -6,    -2,    14,    -1,     0
+      -6,    -6,    -2,    -6,    14,     0,     1
   };
 
   const signed char
   Parser::yydefgoto_[] =
   {
-       0,     4,    13,     5,     6,     7,     8,     9
+       0,     4,     5,     6,     7,     8,     9
   };
 
   const signed char
   Parser::yytable_[] =
   {
-      14,    15,    11,     1,    12,    18,     2,     3,    14,    15,
-      19,    16,    17,    20,    21,    10,    22,    23
+      13,    14,    11,     1,    12,    17,     2,     3,    13,    14,
+      18,    15,    16,    19,    20,    10,    21,    22,    23
   };
 
   const signed char
   Parser::yycheck_[] =
   {
        3,     4,     0,     7,     9,     8,    10,    11,     3,     4,
-      12,     5,     6,    14,    15,     1,    16,    17
+      12,     5,     6,    13,    14,     1,    15,    16,     9
   };
 
   const signed char
   Parser::yystos_[] =
   {
-       0,     7,    10,    11,    14,    16,    17,    18,    19,    20,
-      18,     0,     9,    15,     3,     4,     5,     6,     8,    17,
-      19,    19,    20,    20
+       0,     7,    10,    11,    14,    15,    16,    17,    18,    19,
+      17,     0,     9,     3,     4,     5,     6,     8,    15,    18,
+      18,    19,    19,     9
   };
 
   const signed char
   Parser::yyr1_[] =
   {
-       0,    13,    14,    15,    15,    16,    16,    17,    18,    18,
-      18,    19,    19,    19,    20,    20,    20
+       0,    13,    14,    15,    16,    16,    17,    17,    17,    18,
+      18,    18,    19,    19,    19
   };
 
   const signed char
   Parser::yyr2_[] =
   {
-       0,     2,     2,     1,     0,     3,     1,     1,     3,     3,
-       1,     3,     3,     1,     1,     3,     1
+       0,     2,     1,     1,     4,     1,     3,     3,     1,     3,
+       3,     1,     1,     3,     1
   };
 
 
@@ -1195,8 +1195,8 @@ namespace Expr {
   {
   "\"end of file\"", "error", "\"invalid token\"", "\"+\"", "\"-\"",
   "\"*\"", "\"/\"", "OPEN_PAR", "CLOSE_PAR", "SEMICOLON", "\"number\"",
-  "\"identifier\"", "\"unknown\"", "$accept", "input", "opt_semicolon",
-  "statement_list", "statement", "expr", "term", "factor", YY_NULLPTR
+  "\"identifier\"", "\"unknown\"", "$accept", "input", "statement",
+  "statement_list", "expr", "term", "factor", YY_NULLPTR
   };
 #endif
 
@@ -1205,8 +1205,8 @@ namespace Expr {
   const signed char
   Parser::yyrline_[] =
   {
-       0,    59,    59,    63,    64,    68,    69,    73,    77,    78,
-      79,    83,    84,    92,    96,    97,    98
+       0,    60,    60,    65,    69,    70,    75,    76,    77,    81,
+      82,    90,    94,    95,    96
   };
 
   void
@@ -1284,10 +1284,10 @@ namespace Expr {
       return symbol_kind::S_YYUNDEF;
   }
 
-#line 9 "MiniJavaParser.y"
+#line 10 "MiniJavaParser.y"
 } // Expr
 #line 1290 "/mnt/c/Users/josue/OneDrive/Documentos/VCode Proyectos/PracticasCompiladores2/build/MiniJavaParser.cpp"
 
-#line 109 "MiniJavaParser.y"
+#line 107 "MiniJavaParser.y"
 
 

@@ -25,7 +25,6 @@
 
 #line 13 "/mnt/c/Users/josue/OneDrive/Documentos/VCode Proyectos/PracticasCompiladores2/MiniJavaLexer.l"
 
-
     #include "MiniJavaParser.hpp"
 
 
@@ -52,7 +51,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 class MiniJavaLexer : public reflex::AbstractLexer<reflex::Matcher> {
-#line 18 "/mnt/c/Users/josue/OneDrive/Documentos/VCode Proyectos/PracticasCompiladores2/MiniJavaLexer.l"
+#line 17 "/mnt/c/Users/josue/OneDrive/Documentos/VCode Proyectos/PracticasCompiladores2/MiniJavaLexer.l"
 
 using Token = Expr::Parser::token;
 

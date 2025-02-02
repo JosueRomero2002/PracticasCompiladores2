@@ -11,14 +11,12 @@
 %}
 
 %top{
-    
     #include "MiniJavaParser.hpp"
 }
 
 %class{
 using Token = Expr::Parser::token;
 %}
-
 
 %%
 
@@ -30,17 +28,20 @@ using Token = Expr::Parser::token;
 "/"                       { return Token::OP_DIV; }
 "("                       { return Token::OPEN_PAR; }
 ")"                       { return Token::CLOSE_PAR; }
-";"                       { return Token::SEMICOLON; }
+";"                       { return Token::SEMICOLON; }  // Asegúrate de que este token esté definido
 
-[a-zA-Z_][a-zA-Z0-9_]*  { 
+[a-zA-Z_][a-zA-Z0-9_]*    { 
     yylval->emplace<std::string>(text()); 
-    std::cout << text() << std::endl; 
+    std::cout << "Identificador: " << text() << std::endl; 
     return Token::IDENTIFIER; 
 }
 
-[0-9]+   { return Token::INT_CONST; }
+[0-9]+                    { 
+    yylval->emplace<int>(std::stoi(text())); 
+    std::cout << "Número: " << text() << std::endl; 
+    return Token::INT_CONST; 
+}
 
-. { return Token::ERROR; }
+.                         { return Token::ERROR; }
 
 %%
-

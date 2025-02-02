@@ -45,7 +45,7 @@
 #ifndef YY_YY_MNT_C_USERS_JOSUE_ONEDRIVE_DOCUMENTOS_VCODE_PROYECTOS_PRACTICASCOMPILADORES2_BUILD_MINIJAVAPARSER_HPP_INCLUDED
 # define YY_YY_MNT_C_USERS_JOSUE_ONEDRIVE_DOCUMENTOS_VCODE_PROYECTOS_PRACTICASCOMPILADORES2_BUILD_MINIJAVAPARSER_HPP_INCLUDED
 // "%code requires" blocks.
-#line 11 "MiniJavaParser.y"
+#line 12 "MiniJavaParser.y"
 
     #include <unordered_map>
     class MiniJavaLexer;
@@ -181,10 +181,10 @@
 
 /* Debug traces.  */
 #ifndef YYDEBUG
-# define YYDEBUG 0
+# define YYDEBUG 1
 #endif
 
-#line 9 "MiniJavaParser.y"
+#line 10 "MiniJavaParser.y"
 namespace Expr {
 #line 190 "/mnt/c/Users/josue/OneDrive/Documentos/VCode Proyectos/PracticasCompiladores2/build/MiniJavaParser.hpp"
 
@@ -476,12 +476,11 @@ namespace Expr {
         S_ERROR = 12,                            // "unknown"
         S_YYACCEPT = 13,                         // $accept
         S_input = 14,                            // input
-        S_opt_semicolon = 15,                    // opt_semicolon
+        S_statement = 15,                        // statement
         S_statement_list = 16,                   // statement_list
-        S_statement = 17,                        // statement
-        S_expr = 18,                             // expr
-        S_term = 19,                             // term
-        S_factor = 20                            // factor
+        S_expr = 17,                             // expr
+        S_term = 18,                             // term
+        S_factor = 19                            // factor
       };
     };
 
@@ -1286,8 +1285,8 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 17,     ///< Last index in yytable_.
-      yynnts_ = 8,  ///< Number of nonterminal symbols.
+      yylast_ = 18,     ///< Last index in yytable_.
+      yynnts_ = 7,  ///< Number of nonterminal symbols.
       yyfinal_ = 11 ///< Termination state number.
     };
 
@@ -1299,9 +1298,9 @@ switch (yykind)
   };
 
 
-#line 9 "MiniJavaParser.y"
+#line 10 "MiniJavaParser.y"
 } // Expr
-#line 1305 "/mnt/c/Users/josue/OneDrive/Documentos/VCode Proyectos/PracticasCompiladores2/build/MiniJavaParser.hpp"
+#line 1304 "/mnt/c/Users/josue/OneDrive/Documentos/VCode Proyectos/PracticasCompiladores2/build/MiniJavaParser.hpp"
 
 
 
