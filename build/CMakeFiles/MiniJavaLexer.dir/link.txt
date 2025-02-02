@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/MiniJavaLexer.dir/MiniJavaLexer.cpp.o CMakeFiles/MiniJavaLexer.dir/MiniJavaParser.cpp.o CMakeFiles/MiniJavaLexer.dir/main.cpp.o -o MiniJavaLexer  /usr/local/lib/libreflex_static_lib.a 

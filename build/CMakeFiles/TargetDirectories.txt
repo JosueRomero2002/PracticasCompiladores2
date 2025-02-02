@@ -1,0 +1,3 @@
+/mnt/c/Users/josue/OneDrive/Documentos/VCode Proyectos/PracticasCompiladores2/build/CMakeFiles/MiniJavaLexer.dir
+/mnt/c/Users/josue/OneDrive/Documentos/VCode Proyectos/PracticasCompiladores2/build/CMakeFiles/edit_cache.dir
+/mnt/c/Users/josue/OneDrive/Documentos/VCode Proyectos/PracticasCompiladores2/build/CMakeFiles/rebuild_cache.dir
