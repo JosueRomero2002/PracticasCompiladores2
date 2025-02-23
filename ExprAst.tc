@@ -1,0 +1,788 @@
+%option lang = "C++"
+%option namespace = "Ast"
+
+%decls%{
+    #include <string>
+    #include <iostream>
+    #include <sstream>
+    #include <unordered_map>
+    using string_t = std::string;
+    using symbol_table = std::unordered_map<std::string, int>;
+%}
+
+%{
+    #include "ExprAst.hpp"
+%}
+
+%node Node %abstract %typedef
+
+%node Program Node = {
+    string_t class_name;
+    Node *variable_decls;
+    Node *method_decls;
+}
+
+%node VariableDeclList Node = {
+    Node *first_decl;
+    Node *rest_decls;
+}
+
+%node VariableDecl Node = {
+    Node *type;
+    string_t identifier;
+    Node *ident_list;
+}
+
+%node IdentList Node = {
+    string_t identifier;
+    Node *IdentListParam;
+}
+
+%node Type Node = {
+    string_t type_name;
+    Node *array_optional;
+}
+
+%node ArrayOptional Node = {
+    int size;
+}
+
+%node MethodDeclList Node = {
+    Node *first_decl;
+    Node *rest_decls;
+}
+
+%node MethodDecl Node = {
+    Node *method_type;
+    string_t identifier;
+    Node *opt_param_decl_list;
+    Node *variable_decls;
+    Node *stmt_list;
+}
+
+%node MethodType Node = {
+    string_t type;
+}
+
+%node OptParamDeclList Node = {
+    Node *first_param;
+    Node *rest_params;
+}
+
+%node ParamList Node = {
+    Node *first_param;
+    Node *rest_params;
+}
+
+%node ParamDecl Node = {
+    Node *ref_optional;
+    Node *type;
+    string_t identifier;
+}
+
+%node RefOptional Node = {
+    bool is_ref;
+}
+
+%node StmtList Node = {
+    Node *first_stmt;
+    Node *rest_stmts;
+}
+
+%node Stmt Node %abstract
+
+%node AssignStmt Stmt = {
+    string_t identifier;
+    Node *array_access;
+    Node *expression;
+}
+
+%node ArrayAccess Node = {
+    Node *expression;
+}
+
+%node ReturnStmt Stmt = {
+    Node *expression;
+}
+
+%node IfStmt Stmt = {
+    Node *expression;
+    Node *block;
+    Node *else_optional;
+}
+
+%node ElseOptional Node = {
+    Node *block;
+}
+
+%node Block Node = {
+    Node *stmt_list;
+}
+
+%node WhileStmt Stmt = {
+    Node *expression;
+    Node *block;
+}
+
+%node CallStmt Stmt = {
+    string_t identifier;
+    Node *call_param_list;
+}
+
+%node CallParamList Node = {
+    Node *expression;
+    Node *call_param_rest;
+}
+
+%node CallParamRest Node = {
+    Node *expression;
+    Node *call_param_rest;
+}
+
+%node PrintStmt Stmt = {
+    Node *print_param;
+}
+
+%node PrintParam Node = {
+    Node *expression;
+    string_t string_literal;
+}
+
+%node ReadStmt Stmt = {
+    string_t identifier;
+}
+
+%node BinaryExpr Node %abstract ={
+    Node *left;
+    Node *right;
+}
+
+%node UnaryExpr Node %abstract ={
+    Node *expr;
+}
+
+
+%node EqualBoolean BinaryExpr = {}
+%node NEqualBoolean BinaryExpr = {}
+%node Less_ThanBoolean BinaryExpr = {}
+%node Greater_ThanBoolean BinaryExpr = {}
+%node LessEqualBoolean BinaryExpr = {}
+%node GreaterEqualBoolean BinaryExpr = {}
+
+%node OrBoolean BinaryExpr = {}
+%node AndBoolean BinaryExpr = {}
+
+%node UnaryNotBoolean UnaryExpr = {}
+
+%node SumExpr BinaryExpr = {}
+%node SubExpr BinaryExpr = {}
+%node MulExpr BinaryExpr = {}
+%node DivExpr BinaryExpr = {}
+%node ModExpr BinaryExpr = {}
+
+%node UnaryAddExpr UnaryExpr = {}
+%node UnarySubExpr UnaryExpr = {}
+
+%node Expr Node %abstract 
+
+%node Number Expr = {
+    int value;
+}
+
+%node Identifier Expr = {
+    string_t name;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%operation %virtual string_t toString(Node *this) = {""}
+
+
+
+toString(Program) {
+    std::ostringstream os;
+
+ 
+    os << "Program "
+    << class_name <<    
+    "(" << variable_decls->toString() 
+    << ", " << method_decls->toString() << ")";
+    
+    return os.str();
+}
+
+toString(VariableDeclList) {
+   
+
+
+    if (!first_decl) return "VariableDeclList()";
+    std::ostringstream os;
+    os << "VariableDeclList(" << first_decl->toString();
+    if (rest_decls) os << ", " << rest_decls->toString();
+    os << ")";
+
+
+    return os.str();
+}
+
+toString(VariableDecl) {
+    std::ostringstream os;
+  os << "VARIABLEDECL" ;
+    return os.str();
+}
+
+toString(IdentList) {
+    
+    std::ostringstream os;
+    os << "IdentList(" <<  ")";
+    return os.str();
+}
+
+toString(Type) {
+    std::ostringstream os;
+    os << "Type(" << type_name;
+    if (array_optional) os << ", " << array_optional->toString();
+    os << ")";
+    return os.str();
+}
+
+toString(ArrayOptional) {
+ 
+    std::ostringstream os;
+    os << "ArrayOptional(" <<  ")";
+    return os.str();
+}
+
+toString(MethodDeclList) {
+
+    std::ostringstream os;
+    os << "MethodDeclList(" << ")";
+    return os.str();
+}
+
+toString(MethodDecl) {
+    std::ostringstream os;
+    os << "MethodDecl(" << ")";
+    return os.str();
+}
+
+toString(MethodType) {
+    return "MethodType()";
+}
+
+
+toString(ParamList) {
+    if (!first_param) return "ParamList()";
+    std::ostringstream os;
+    os << "ParamList(" << first_param->toString();
+    if (rest_params) os << ", " << rest_params->toString();
+    os << ")";
+    return os.str();
+}
+
+toString(ParamDecl) {
+    std::ostringstream os;
+    os << "ParamDecl(";
+    if (ref_optional) os << ref_optional->toString() << ", ";
+    os << type->toString() << ", " << identifier << ")";
+    return os.str();
+}
+
+toString(RefOptional) {
+    return is_ref ? "RefOptional(ref)" : "RefOptional()";
+}
+
+toString(StmtList) {
+    if (!first_stmt) return "StmtList()";
+    std::ostringstream os;
+    os << "StmtList(" << first_stmt->toString();
+    if (rest_stmts) os << ", " << rest_stmts->toString();
+    os << ")";
+    return os.str();
+}
+
+toString(AssignStmt) {
+    std::ostringstream os;
+    os << "AssignStmt(" << identifier;
+    if (array_access) os << array_access->toString();
+    os << ", " << expression->toString() << ")";
+    return os.str();
+}
+
+toString(ReturnStmt) {
+    return "ReturnStmt(" + expression->toString() + ")";
+}
+
+toString(IfStmt) {
+    std::ostringstream os;
+    os << "IfStmt(" << expression->toString() << ", " << block->toString();
+    if (else_optional) os << ", " << else_optional->toString();
+    os << ")";
+    return os.str();
+}
+
+toString(WhileStmt) {
+    return "WhileStmt(" + expression->toString() + ", " + block->toString() + ")";
+}
+
+toString(CallStmt) {
+    std::ostringstream os;
+    os << "CallStmt(" << identifier << ", ";
+    if (call_param_list) os << call_param_list->toString();
+    os << ")";
+    return os.str();
+}
+
+toString(PrintStmt) {
+    return "PrintStmt(" + print_param->toString() + ")";
+}
+
+
+
+toString(OptParamDeclList) {
+    if (!first_param) return "OptParamDeclList()";
+    std::ostringstream os;
+    os << "OptParamDeclList(" << first_param->toString();
+    if (rest_params) os << ", " << rest_params->toString();
+    os << ")";
+    return os.str();
+}
+
+toString(ReadStmt) {
+    return "ReadStmt(" + identifier + ")";
+}
+
+toString(ArrayAccess) {
+    if (!expression) return "ArrayAccess()";
+    return "ArrayAccess(" + expression->toString() + ")";
+}
+
+toString(ElseOptional) {
+    if (!block) return "ElseOptional()";
+    return "ElseOptional(" + block->toString() + ")";
+}
+
+toString(Block) {
+    return "Block(" + stmt_list->toString() + ")";
+}
+
+
+toString(CallParamList) {
+  
+    return "CallParamList()";
+}
+
+toString(CallParamRest) {
+  
+    return "CallParamRest()";
+}
+
+toString(PrintParam) {
+    return "PrintParam()";
+}
+
+
+
+toString(BinaryExpr){
+    std::ostringstream os;
+    os << "BinaryExpr(" 
+       << left->toString() 
+       << ", " << right->toString() 
+       << ")";
+    return os.str();
+}
+
+
+toString(UnaryExpr){
+    std::ostringstream os;
+    os << "UnaryExpr(" 
+       << expr->toString() 
+     
+       << ")";
+    return os.str();
+}
+
+
+toString(EqualBoolean){
+    return "EqualBoolean(" + left->toString() + " == " + right->toString() + ")";
+}
+
+toString(NEqualBoolean){
+    return "NEqualBoolean(" + left->toString() + " != " + right->toString() + ")";
+}
+
+toString(Less_ThanBoolean){
+    return "Less_ThanBoolean(" + left->toString() + " < " + right->toString() + ")";
+}
+
+toString(Greater_ThanBoolean){
+    return "Greater_ThanBoolean(" + left->toString() + " > " + right->toString() + ")";
+}
+
+toString(LessEqualBoolean){
+    return "LessEqualBoolean(" + left->toString() + " <= " + right->toString() + ")";
+}
+
+toString(GreaterEqualBoolean){
+    return "GreaterEqualBoolean(" + left->toString() + " >= " + right->toString() + ")";
+}
+
+
+toString(OrBoolean){
+    return "OrBoolean(" + left->toString() + " || " + right->toString() + ")";
+}
+
+toString(AndBoolean){
+    return "AndBoolean(" + left->toString() + " && " + right->toString() + ")";
+}
+
+toString(UnaryNotBoolean){
+    return "UnaryNotBoolean(!" + expr->toString() + ")";
+}
+
+toString(SumExpr){
+    return "SumExpr(" + left->toString() + " + " + right->toString() + ")";
+}
+
+toString(SubExpr){
+    return "SubExpr(" + left->toString() + " - " + right->toString() + ")";
+}
+
+toString(MulExpr){
+    return "MulExpr(" + left->toString() + " * " + right->toString() + ")";
+}
+
+toString(DivExpr){
+    return "DivExpr(" + left->toString() + " / " + right->toString() + ")";
+}
+
+toString(ModExpr){
+    return "ModExpr(" + left->toString() + " % " + right->toString() + ")";
+}
+
+toString(UnaryAddExpr){
+    return "UnaryAddExpr(" + expr->toString() + ")";
+}
+
+toString(UnarySubExpr){
+    return "UnarySubExpr(-" + expr->toString() + ")";
+}
+
+toString(Number){
+    std::ostringstream os;
+    os << "Number(" << value << ")";
+    return os.str();
+}
+
+toString(Identifier){
+    std::ostringstream os;
+    os << "Identifier(" << name << ")";
+    return os.str();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%operation int eval(Node *node, symbol_table& vars) = {0}
+
+
+eval(Program) {
+std::cout << "AST Program" << std::endl;
+
+    if (node->variable_decls) eval(node->variable_decls, vars);
+    if (node->method_decls) eval(node->method_decls, vars);
+
+    return 0;
+
+}
+
+eval(VariableDeclList) {
+    if (node->first_decl)  eval(node->first_decl, vars);
+
+    if (node->rest_decls)  eval(node->rest_decls, vars);
+
+    return 0;
+}
+
+eval(VariableDecl) {
+    vars[node->identifier] = 0;
+    if (node->ident_list) eval(node->ident_list, vars);
+    return 0;
+  
+}
+
+eval(IdentList) {
+    vars[node->identifier] = 0;
+    if (node->IdentListParam) eval(node->IdentListParam, vars);
+    return 0;
+}
+
+eval(Type) {
+    
+    return 0;
+}
+
+eval(ArrayOptional) {
+    return node->size; 
+}
+
+eval(MethodDeclList) {
+    if (node->first_decl) eval(node->first_decl, vars);
+    if (node->rest_decls) eval(node->rest_decls, vars);
+    return 0;
+}
+
+eval(MethodDecl) {
+    if (node->opt_param_decl_list) eval(node->opt_param_decl_list, vars);
+    if (node->variable_decls) eval(node->variable_decls, vars);
+    if (node->stmt_list) eval(node->stmt_list, vars);
+    return 0;
+}
+
+eval(MethodType) {
+    return 0;  // Devuelve el tipo de retorno del método
+}
+
+eval(OptParamDeclList) {
+    if (node->first_param)eval(node->first_param, vars);
+    if (node->rest_params) eval(node->rest_params, vars);
+    return 0;
+}
+
+eval(ParamList) {
+    if (node->first_param) eval(node->first_param, vars);
+    if (node->rest_params) eval(node->rest_params, vars);
+    return 0;
+}
+
+
+eval(AssignStmt){
+
+  //  %node AssignStmt Stmt = {
+   // string_t identifier;
+ //   Node *array_access;
+ //   Node *expression;
+//}
+
+
+    std::cout << "[AST] - AssignStmt" << std::endl;
+   
+    return 0;
+
+}
+
+eval(ReturnStmt){
+    return eval(node->expression, vars);
+}
+
+eval(IfStmt){
+  
+    return 0;
+}
+
+eval(WhileStmt){
+    int last_val = 0;
+    while(eval(node->expression, vars)){
+        last_val = eval(node->block, vars);
+    }
+    return last_val;
+}
+
+
+
+eval(ParamDecl) {
+    vars[node->identifier] = 0;
+    return 0;
+}
+
+eval(RefOptional) {
+    return node->is_ref;  // Devuelve si el parámetro es por referencia (true/false)
+}
+
+eval(StmtList) {
+    if (node->first_stmt) eval(node->first_stmt, vars);
+    if (node->rest_stmts) eval(node->rest_stmts, vars);
+
+    return 0;
+}
+
+eval(CallStmt) {
+        return 0;
+}
+
+eval(PrintStmt) {
+    return 0;
+}
+
+eval(ReadStmt) {
+       return 0;
+}
+
+eval(ArrayAccess) {
+    return 0;
+}
+
+eval(ElseOptional) {
+      return 0;
+}
+
+
+eval(Block) {
+      return 0;
+}
+
+eval(CallParamList) {
+      return 0;
+}
+
+eval(CallParamRest) {
+       return 0;
+}
+
+eval(PrintParam) {
+      return 0;
+}
+
+
+
+
+
+
+
+
+
+eval(EqualBoolean){
+    return eval(node->left, vars) == eval(node->right, vars);
+}
+
+eval(NEqualBoolean){
+    return eval(node->left, vars) != eval(node->right, vars);
+}
+
+eval(Less_ThanBoolean){
+    return eval(node->left, vars) < eval(node->right, vars);
+}
+
+eval(Greater_ThanBoolean){
+    return eval(node->left, vars) > eval(node->right, vars);
+}
+
+eval(LessEqualBoolean){
+    return eval(node->left, vars) <= eval(node->right, vars);
+}
+
+eval(GreaterEqualBoolean){
+    return eval(node->left, vars) >= eval(node->right, vars);
+}
+
+eval(OrBoolean ){
+    return eval(node->left, vars) || eval(node->right, vars);
+}
+
+eval(AndBoolean){
+    return eval(node->left, vars) && eval(node->right, vars);
+}
+
+eval(UnaryNotBoolean){
+    return !eval(node->expr, vars);
+}
+
+
+eval(SumExpr){
+    return eval(node->left, vars) + eval(node->right, vars);
+}
+
+eval(SubExpr){
+    return eval(node->left, vars) - eval(node->right, vars);
+}
+
+eval(MulExpr){
+    return eval(node->left, vars) * eval(node->right, vars);
+}
+
+
+eval(DivExpr){
+    auto right = eval(node->right, vars);
+    if (right == 0) {
+        throw std::runtime_error("División por cero");
+    }
+    return eval(node->left, vars) / right;
+}
+
+eval(ModExpr){
+    return eval(node->left, vars) % eval(node->right, vars);
+}
+
+eval(UnaryAddExpr){
+    return eval(node->expr, vars);
+    }
+
+eval(UnarySubExpr){
+    return -eval(node->expr, vars);
+}
+
+eval(Number){
+    return node->value;
+}
+
+
+
+eval(Identifier){
+    auto it = vars.find(node->name);
+    if(it == vars.end()){
+        throw std::runtime_error("Variable not found");
+    }
+    return it->second;
+}
+
+
+
+
+
+
+
+

@@ -1,0 +1,83 @@
+<program> ::= KW_CLASS IDENTIFIER OPEN_CURLY <variable_decl_list> <method_decl_list> CLOSE_CURLY
+
+<variable_decl_list> ::= <variable_decl> <variable_decl_list> | ε
+<variable_decl> ::= <type> IDENTIFIER <ident_list> SEMICOLON
+<ident_list> ::= COMMA IDENTIFIER <ident_list> | ε
+
+<type> ::= KW_INT <array_optional>
+<array_optional> ::= OPEN_BRACKET CONSTANT CLOSE_BRACKET | ε
+
+<method_decl_list> ::= <method_decl> <method_decl_list> | ε
+<method_decl> ::= <method_type> IDENTIFIER OPEN_PAR <opt_param_decl_list> CLOSE_PAR
+                  OPEN_CURLY <variable_decl_list> <stmt_list> CLOSE_CURLY
+
+<method_type> ::= KW_INT | KW_VOID
+
+<opt_param_decl_list> ::= <param_decl> <param_list> | ε
+<param_list> ::= COMMA <param_decl> <param_list> | ε
+<param_decl> ::= <ref_optional> <type> IDENTIFIER
+<ref_optional> ::= KW_REF | ε
+
+<stmt_list> ::= <stmt> <stmt_list> | ε
+<stmt> ::= <assign_stmt>
+         | <if_stmt>
+         | <while_stmt>
+         | <call_stmt>
+         | <return_stmt>
+         | <print_stmt>
+         | <read_stmt>
+
+<assign_stmt> ::= IDENTIFIER <array_access> OP_ASSIGN <expression> SEMICOLON
+
+<call_stmt> ::= IDENTIFIER OPEN_PAR <call_param_list> CLOSE_PAR SEMICOLON
+
+<array_access> ::= OPEN_BRACKET <expression> CLOSE_BRACKET | ε
+
+<return_stmt> ::= KW_RETURN <expression> SEMICOLON
+
+<if_stmt> ::= KW_IF OPEN_PAR <expression> CLOSE_PAR <block> <else_optional>
+<else_optional> ::= KW_ELSE <block> | ε
+
+<block> ::= OPEN_CURLY <stmt_list> CLOSE_CURLY
+
+<while_stmt> ::= KW_WHILE OPEN_PAR <expression> CLOSE_PAR <block>
+
+<call_param_list> ::= <expression> <call_param_rest> | ε
+<call_param_rest> ::= COMMA <expression> <call_param_rest> | ε
+
+<print_stmt> ::= KW_PRINT OPEN_PAR <print_param> CLOSE_PAR SEMICOLON
+<print_param> ::= <expression> | STRING_LITERAL
+
+<read_stmt> ::= KW_READ OPEN_PAR IDENTIFIER CLOSE_PAR SEMICOLON
+
+<expression> ::= <boolean_expression>
+
+<boolean_expression> ::= <boolean_term> <bool_or_rest>
+<bool_or_rest> ::= OP_BOOL_OR <boolean_term> <bool_or_rest> | ε
+
+<boolean_term> ::= <boolean_factor> <bool_and_rest>
+<bool_and_rest> ::= OP_BOOL_AND <boolean_factor> <bool_and_rest> | ε
+
+<boolean_factor> ::= <relational_expression> | OP_BOOL_NOT <boolean_factor>
+
+<relational_expression> ::= <arithmetic_expression> <relational_operator> <arithmetic_expression>
+                           | <arithmetic_expression>
+<relational_operator> ::= OP_EQUAL | OP_NOT_EQUAL | OP_LESS_THAN | OP_GREATHER_THAN
+                        | OP_LESS_EQUAL | OP_GREATHER_EQUAL
+
+<arithmetic_expression> ::= <term> <arith_expr_rest>
+<arith_expr_rest> ::= (OP_ADD | OP_SUB) <term> <arith_expr_rest> | ε
+
+<term> ::= <factor> <term_rest>
+<term_rest> ::= (OP_MUL | OP_DIV | OP_MOD) <factor> <term_rest> | ε
+
+<factor> ::= <unary_optional> <primary>
+<unary_optional> ::= OP_ADD | OP_SUB | ε
+
+<primary> ::= CONSTANT
+            | IDENTIFIER
+            | IDENTIFIER OPEN_BRACKET <expression> CLOSE_BRACKET
+            | IDENTIFIER OPEN_PAR <call_param_list> CLOSE_PAR
+            | OPEN_PAR <expression> CLOSE_PAR
+
+<CONSTANT> ::= INT_CONST | HEX_CONST | BINARIO
